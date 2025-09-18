@@ -44,12 +44,12 @@ spec:
           type: string
 
       dependencies:
-        domain:
+        stackType:
           oneOf:
-            # Banking domain options based on stackType
+            # Banking domain options for UI Framework
             - properties:
                 domain:
-                  const: Banking
+                  enum: [Banking]
                 stackType:
                   const: UI Framework
                 stackOption:
@@ -57,9 +57,10 @@ spec:
                   enum: [Vue.js, Next.js, Typescript]
               required:
                 - stackOption
+            # Banking domain options for Backend Platform
             - properties:
                 domain:
-                  const: Banking
+                  enum: [Banking]
                 stackType:
                   const: Backend Platform
                 stackOption:
@@ -67,9 +68,10 @@ spec:
                   enum: [Java, Python, Ruby]
               required:
                 - stackOption
+            # Banking domain options for Database
             - properties:
                 domain:
-                  const: Banking
+                  enum: [Banking]
                 stackType:
                   const: Database
                 stackOption:
@@ -78,10 +80,10 @@ spec:
               required:
                 - stackOption
 
-            # Insurance domain options
+            # Insurance domain options for UI Framework
             - properties:
                 domain:
-                  const: Insurance
+                  enum: [Insurance]
                 stackType:
                   const: UI Framework
                 stackOption:
@@ -89,9 +91,10 @@ spec:
                   enum: [React, Angular]
               required:
                 - stackOption
+            # Insurance domain options for Backend Platform
             - properties:
                 domain:
-                  const: Insurance
+                  enum: [Insurance]
                 stackType:
                   const: Backend Platform
                 stackOption:
@@ -99,9 +102,10 @@ spec:
                   enum: [Scala, Go, Django]
               required:
                 - stackOption
+            # Insurance domain options for Database
             - properties:
                 domain:
-                  const: Insurance
+                  enum: [Insurance]
                 stackType:
                   const: Database
                 stackOption:
@@ -110,10 +114,10 @@ spec:
               required:
                 - stackOption
 
-            # HealthCare domain options
+            # HealthCare domain options for UI Framework
             - properties:
                 domain:
-                  const: HealthCare
+                  enum: [HealthCare]
                 stackType:
                   const: UI Framework
                 stackOption:
@@ -121,9 +125,10 @@ spec:
                   enum: [Three.js, ReactJs, Angular 2+]
               required:
                 - stackOption
+            # HealthCare domain options for Backend Platform
             - properties:
                 domain:
-                  const: HealthCare
+                  enum: [HealthCare]
                 stackType:
                   const: Backend Platform
                 stackOption:
@@ -131,9 +136,10 @@ spec:
                   enum: [Springboot, ASP.NET]
               required:
                 - stackOption
+            # HealthCare domain options for Database
             - properties:
                 domain:
-                  const: HealthCare
+                  enum: [HealthCare]
                 stackType:
                   const: Database
                 stackOption:
@@ -142,10 +148,10 @@ spec:
               required:
                 - stackOption
 
-            # Education domain options
+            # Education domain options for UI Framework
             - properties:
                 domain:
-                  const: Education
+                  enum: [Education]
                 stackType:
                   const: UI Framework
                 stackOption:
@@ -153,9 +159,10 @@ spec:
                   enum: [Vue.js, Next.js, Typescript, Three.js, ReactJs, Angular 2+]
               required:
                 - stackOption
+            # Education domain options for Backend Platform
             - properties:
                 domain:
-                  const: Education
+                  enum: [Education]
                 stackType:
                   const: Backend Platform
                 stackOption:
@@ -174,9 +181,10 @@ spec:
                     - ASP.NET
               required:
                 - stackOption
+            # Education domain options for Database
             - properties:
                 domain:
-                  const: Education
+                  enum: [Education]
                 stackType:
                   const: Database
                 stackOption:
