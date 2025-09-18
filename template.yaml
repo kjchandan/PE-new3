@@ -1,7 +1,7 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: domain-based-tech-stack-wizard
+  name: domain-tech-stack-wizard
   title: Domain-Based Tech Stack Wizard
   description: Select a domain, then choose a tech stack type, and pick options dynamically.
   tags:
@@ -42,11 +42,12 @@ spec:
         stackOption:
           title: Select Stack Option
           type: string
-          enum: []
+          # No enum here, must be defined in dependencies for dynamic behavior
 
       dependencies:
         domain:
           oneOf:
+            # Banking
             - properties:
                 domain:
                   const: Banking
@@ -83,6 +84,7 @@ spec:
               required:
                 - stackOption
 
+            # Insurance
             - properties:
                 domain:
                   const: Insurance
@@ -119,6 +121,7 @@ spec:
               required:
                 - stackOption
 
+            # HealthCare
             - properties:
                 domain:
                   const: HealthCare
@@ -155,6 +158,7 @@ spec:
               required:
                 - stackOption
 
+            # Education
             - properties:
                 domain:
                   const: Education
@@ -203,29 +207,30 @@ spec:
                 - stackOption
 
   steps:
-    - id: review
-      name: Review Your Selections
-      action: custom:review
+    - id: fetch
+      name: Fetch Skeleton
+      action: fetch:template
       input:
-        summary:
-          - label: Domain
-            value: ${{ parameters.domain }}
-          - label: Tech Stack Type
-            value: ${{ parameters.stackType }}
-          - label: Stack Option
-            value: ${{ parameters.stackOption }}
+        url: ./skeleton
+        values:
+          domain: ${{ parameters.domain }}
+          stackType: ${{ parameters.stackType }}
+          stackOption: ${{ parameters.stackOption }}
 
   output:
     links:
-      - title: 💻 Open in VSCode
+      - title: Review Selection
+        url: https://example.com/review?domain=${{ parameters.domain }}&stackType=${{ parameters.stackType }}&stackOption=${{ parameters.stackOption }}
+        icon: visibility
+
+      - title: Open in VSCode
         icon: code
-        url: https://vscode.dev/
+        url: https://vscode.dev/?folder=${{ parameters.domain }}-${{ parameters.stackType }}-${{ parameters.stackOption }}
 
-      - title: 🚀 Open in Replit
+      - title: Open in Replit
         icon: rocket
-        url: https://replit.com/
+        url: https://replit.com/new/github/${{ parameters.domain }}-${{ parameters.stackType }}-${{ parameters.stackOption }}
 
-      - title: 🔄 Review Your Selections
-        icon: review
-        onClick: ${{ steps.review }}
-
+      - title: Open in Catalog
+        icon: catalog
+        entityRef: component:default/my-service
