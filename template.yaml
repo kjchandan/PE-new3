@@ -1,0 +1,143 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: simple-dependent-stack
+  title: Simple Dependent Tech Stack
+  description: Choose domain, then tech stacks filter based on that
+  tags:
+    - generator
+    - frontend
+    - backend
+    - database
+
+spec:
+  owner: user:your-username
+  type: service
+
+  parameters:
+    - title: Project Stack Selection
+      required:
+        - domain
+      properties:
+        domain:
+          title: Select a Domain
+          type: string
+          enum:
+            - Banking
+            - Insurance
+            - HealthCare
+            - Education
+
+      dependencies:
+        domain:
+          oneOf:
+            - properties:
+                domain:
+                  const: Banking
+                frontend:
+                  title: UI Framework
+                  type: string
+                  enum: [Vue.js, Next.js, Typescript]
+                backend:
+                  title: Backend Platform
+                  type: string
+                  enum: [Java, Python, Ruby]
+                database:
+                  title: Database
+                  type: string
+                  enum: [MYSQL, PostgreSQL]
+              required: [frontend, backend, database]
+
+            - properties:
+                domain:
+                  const: Insurance
+                frontend:
+                  title: UI Framework
+                  type: string
+                  enum: [React, Angular]
+                backend:
+                  title: Backend Platform
+                  type: string
+                  enum: [Scala, Go, Django]
+                database:
+                  title: Database
+                  type: string
+                  enum: [MYSQL, PostgreSQL]
+              required: [frontend, backend, database]
+
+            - properties:
+                domain:
+                  const: HealthCare
+                frontend:
+                  title: UI Framework
+                  type: string
+                  enum: [Three.js, ReactJs, Angular 2+]
+                backend:
+                  title: Backend Platform
+                  type: string
+                  enum: [Springboot, ASP.NET]
+                database:
+                  title: Database
+                  type: string
+                  enum: [MYSQL, PostgreSQL]
+              required: [frontend, backend, database]
+
+            - properties:
+                domain:
+                  const: Education
+                frontend:
+                  title: UI Framework
+                  type: string
+                  enum: [Vue.js, Next.js, Typescript, Three.js, ReactJs, Angular 2+]
+                backend:
+                  title: Backend Platform
+                  type: string
+                  enum:
+                    - Java
+                    - Python
+                    - Ruby
+                    - PHP Kotlin
+                    - C sharp
+                    - Perl
+                    - Scala
+                    - Go
+                    - Djangi
+                    - Springboot
+                    - ASP.NET
+                database:
+                  title: Database
+                  type: string
+                  enum: [MYSQL, PostgreSQL]
+              required: [frontend, backend, database]
+
+  steps:
+    - id: fetch
+      name: Fetch Skeleton
+      action: fetch:template
+      input:
+        url: ./skeleton
+        values:
+          domain: ${{ parameters.domain }}
+          frontend: ${{ parameters.frontend }}
+          backend: ${{ parameters.backend }}
+          database: ${{ parameters.database }}
+
+  output:
+    text:
+      - title: ✅ Project generated successfully
+        content: |
+          You selected:
+          - Domain: ${{ parameters.domain }}
+          - Frontend: ${{ parameters.frontend }}
+          - Backend: ${{ parameters.backend }}
+          - Database: ${{ parameters.database }}
+
+    # Optional: If you want to keep "Open in VSCode" or Replit
+    links:
+      - title: 💻 Open in VSCode (optional example)
+        icon: code
+        url: https://vscode.dev/
+
+      - title: 🚀 Open in Replit (optional example)
+        icon: rocket
+        url: https://replit.com/
