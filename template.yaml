@@ -14,10 +14,12 @@ spec:
   type: service
 
   parameters:
-    # Step 1: Select Domain
-    - title: Domain Selection
+    - title: Project Stack Configuration
+      type: object               # <--- Add this!
       required:
         - domain
+        - stackType
+        - stackOption
       properties:
         domain:
           title: Select a Domain
@@ -28,11 +30,6 @@ spec:
             - HealthCare
             - Education
 
-    # Step 2: Select Stack Category
-    - title: Tech Stack Category
-      required:
-        - stackType
-      properties:
         stackType:
           title: Select Tech Stack Type
           type: string
@@ -41,12 +38,10 @@ spec:
             - Backend Platform
             - Database
 
-    # Step 3: Dynamic Stack Options
-    - title: Stack Options
       dependencies:
         domain:
           oneOf:
-            # ------------------ Banking ------------------
+            # Banking
             - properties:
                 domain:
                   const: Banking
@@ -80,7 +75,7 @@ spec:
                   enum: [MYSQL, PostgreSQL]
               required: [stackOption]
 
-            # ------------------ Insurance ------------------
+            # Insurance
             - properties:
                 domain:
                   const: Insurance
@@ -114,7 +109,7 @@ spec:
                   enum: [MYSQL, PostgreSQL]
               required: [stackOption]
 
-            # ------------------ HealthCare ------------------
+            # HealthCare
             - properties:
                 domain:
                   const: HealthCare
@@ -148,7 +143,7 @@ spec:
                   enum: [MYSQL, PostgreSQL]
               required: [stackOption]
 
-            # ------------------ Education ------------------
+            # Education
             - properties:
                 domain:
                   const: Education
@@ -208,16 +203,16 @@ spec:
     text:
       - title: ✅ Stack Selection Complete
         content: |
-          You selected the following configuration:
+          You selected:
           - Domain: ${{ parameters.domain }}
           - Stack Type: ${{ parameters.stackType }}
-          - Selected Option: ${{ parameters.stackOption }}
+          - Option: ${{ parameters.stackOption }}
 
     links:
-      - title: 💻 Open in VSCode (optional)
+      - title: 💻 Open in VSCode
         icon: code
         url: https://vscode.dev/
 
-      - title: 🚀 Open in Replit (optional)
+      - title: 🚀 Open in Replit
         icon: rocket
         url: https://replit.com/
