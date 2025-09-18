@@ -42,19 +42,17 @@ spec:
         stackOption:
           title: Select Stack Option
           type: string
-          # No enum here, defined dynamically via dependencies
 
       dependencies:
         domain:
           oneOf:
-            # Banking
+            # Banking domain options based on stackType
             - properties:
                 domain:
                   const: Banking
                 stackType:
                   const: UI Framework
                 stackOption:
-                  title: UI Framework Options for Banking
                   type: string
                   enum: [Vue.js, Next.js, Typescript]
               required:
@@ -65,7 +63,6 @@ spec:
                 stackType:
                   const: Backend Platform
                 stackOption:
-                  title: Backend Platform Options for Banking
                   type: string
                   enum: [Java, Python, Ruby]
               required:
@@ -76,20 +73,18 @@ spec:
                 stackType:
                   const: Database
                 stackOption:
-                  title: Database Options for Banking
                   type: string
                   enum: [MYSQL, PostgreSQL]
               required:
                 - stackOption
 
-            # Insurance
+            # Insurance domain options
             - properties:
                 domain:
                   const: Insurance
                 stackType:
                   const: UI Framework
                 stackOption:
-                  title: UI Framework Options for Insurance
                   type: string
                   enum: [React, Angular]
               required:
@@ -100,7 +95,6 @@ spec:
                 stackType:
                   const: Backend Platform
                 stackOption:
-                  title: Backend Platform Options for Insurance
                   type: string
                   enum: [Scala, Go, Django]
               required:
@@ -111,20 +105,18 @@ spec:
                 stackType:
                   const: Database
                 stackOption:
-                  title: Database Options for Insurance
                   type: string
                   enum: [MYSQL, PostgreSQL]
               required:
                 - stackOption
 
-            # HealthCare
+            # HealthCare domain options
             - properties:
                 domain:
                   const: HealthCare
                 stackType:
                   const: UI Framework
                 stackOption:
-                  title: UI Framework Options for HealthCare
                   type: string
                   enum: [Three.js, ReactJs, Angular 2+]
               required:
@@ -135,7 +127,6 @@ spec:
                 stackType:
                   const: Backend Platform
                 stackOption:
-                  title: Backend Platform Options for HealthCare
                   type: string
                   enum: [Springboot, ASP.NET]
               required:
@@ -146,20 +137,18 @@ spec:
                 stackType:
                   const: Database
                 stackOption:
-                  title: Database Options for HealthCare
                   type: string
                   enum: [MYSQL, PostgreSQL]
               required:
                 - stackOption
 
-            # Education
+            # Education domain options
             - properties:
                 domain:
                   const: Education
                 stackType:
                   const: UI Framework
                 stackOption:
-                  title: UI Framework Options for Education
                   type: string
                   enum: [Vue.js, Next.js, Typescript, Three.js, ReactJs, Angular 2+]
               required:
@@ -170,7 +159,6 @@ spec:
                 stackType:
                   const: Backend Platform
                 stackOption:
-                  title: Backend Platform Options for Education
                   type: string
                   enum:
                     - Java
@@ -192,7 +180,6 @@ spec:
                 stackType:
                   const: Database
                 stackOption:
-                  title: Database Options for Education
                   type: string
                   enum: [MYSQL, PostgreSQL]
               required:
