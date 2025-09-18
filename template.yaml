@@ -1,21 +1,21 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: simple-dependent-stack
-  title: Simple Dependent Tech Stack
-  description: Choose domain, then tech stacks filter based on that
+  name: domain-stack-wizard
+  title: Domain-Based Tech Stack Wizard
+  description: Select a domain, then choose a tech stack type, and pick options dynamically.
   tags:
-    - generator
-    - frontend
-    - backend
-    - database
+    - wizard
+    - tech-stack
+    - dynamic
 
 spec:
   owner: user:your-username
   type: service
 
   parameters:
-    - title: Project Stack Selection
+    # Step 1: Select Domain
+    - title: Domain Selection
       required:
         - domain
       properties:
@@ -28,69 +28,145 @@ spec:
             - HealthCare
             - Education
 
+    # Step 2: Select Stack Category
+    - title: Tech Stack Category
+      required:
+        - stackType
+      properties:
+        stackType:
+          title: Select Tech Stack Type
+          type: string
+          enum:
+            - UI Framework
+            - Backend Platform
+            - Database
+
+    # Step 3: Dynamic Stack Options
+    - title: Stack Options
       dependencies:
         domain:
           oneOf:
+            # ------------------ Banking ------------------
             - properties:
                 domain:
                   const: Banking
-                frontend:
-                  title: UI Framework
+                stackType:
+                  const: UI Framework
+                stackOption:
+                  title: UI Framework Options (Banking)
                   type: string
                   enum: [Vue.js, Next.js, Typescript]
-                backend:
-                  title: Backend Platform
+              required: [stackOption]
+
+            - properties:
+                domain:
+                  const: Banking
+                stackType:
+                  const: Backend Platform
+                stackOption:
+                  title: Backend Platform Options (Banking)
                   type: string
                   enum: [Java, Python, Ruby]
-                database:
-                  title: Database
+              required: [stackOption]
+
+            - properties:
+                domain:
+                  const: Banking
+                stackType:
+                  const: Database
+                stackOption:
+                  title: Database Options (Banking)
                   type: string
                   enum: [MYSQL, PostgreSQL]
-              required: [frontend, backend, database]
+              required: [stackOption]
+
+            # ------------------ Insurance ------------------
+            - properties:
+                domain:
+                  const: Insurance
+                stackType:
+                  const: UI Framework
+                stackOption:
+                  title: UI Framework Options (Insurance)
+                  type: string
+                  enum: [React, Angular]
+              required: [stackOption]
 
             - properties:
                 domain:
                   const: Insurance
-                frontend:
-                  title: UI Framework
-                  type: string
-                  enum: [React, Angular]
-                backend:
-                  title: Backend Platform
+                stackType:
+                  const: Backend Platform
+                stackOption:
+                  title: Backend Platform Options (Insurance)
                   type: string
                   enum: [Scala, Go, Django]
-                database:
-                  title: Database
+              required: [stackOption]
+
+            - properties:
+                domain:
+                  const: Insurance
+                stackType:
+                  const: Database
+                stackOption:
+                  title: Database Options (Insurance)
                   type: string
                   enum: [MYSQL, PostgreSQL]
-              required: [frontend, backend, database]
+              required: [stackOption]
+
+            # ------------------ HealthCare ------------------
+            - properties:
+                domain:
+                  const: HealthCare
+                stackType:
+                  const: UI Framework
+                stackOption:
+                  title: UI Framework Options (HealthCare)
+                  type: string
+                  enum: [Three.js, ReactJs, Angular 2+]
+              required: [stackOption]
 
             - properties:
                 domain:
                   const: HealthCare
-                frontend:
-                  title: UI Framework
-                  type: string
-                  enum: [Three.js, ReactJs, Angular 2+]
-                backend:
-                  title: Backend Platform
+                stackType:
+                  const: Backend Platform
+                stackOption:
+                  title: Backend Platform Options (HealthCare)
                   type: string
                   enum: [Springboot, ASP.NET]
-                database:
-                  title: Database
+              required: [stackOption]
+
+            - properties:
+                domain:
+                  const: HealthCare
+                stackType:
+                  const: Database
+                stackOption:
+                  title: Database Options (HealthCare)
                   type: string
                   enum: [MYSQL, PostgreSQL]
-              required: [frontend, backend, database]
+              required: [stackOption]
+
+            # ------------------ Education ------------------
+            - properties:
+                domain:
+                  const: Education
+                stackType:
+                  const: UI Framework
+                stackOption:
+                  title: UI Framework Options (Education)
+                  type: string
+                  enum: [Vue.js, Next.js, Typescript, Three.js, ReactJs, Angular 2+]
+              required: [stackOption]
 
             - properties:
                 domain:
                   const: Education
-                frontend:
-                  title: UI Framework
-                  type: string
-                  enum: [Vue.js, Next.js, Typescript, Three.js, ReactJs, Angular 2+]
-                backend:
-                  title: Backend Platform
+                stackType:
+                  const: Backend Platform
+                stackOption:
+                  title: Backend Platform Options (Education)
                   type: string
                   enum:
                     - Java
@@ -104,40 +180,44 @@ spec:
                     - Djangi
                     - Springboot
                     - ASP.NET
-                database:
-                  title: Database
+              required: [stackOption]
+
+            - properties:
+                domain:
+                  const: Education
+                stackType:
+                  const: Database
+                stackOption:
+                  title: Database Options (Education)
                   type: string
                   enum: [MYSQL, PostgreSQL]
-              required: [frontend, backend, database]
+              required: [stackOption]
 
   steps:
     - id: fetch
-      name: Fetch Skeleton
+      name: Fetch Template
       action: fetch:template
       input:
         url: ./skeleton
         values:
           domain: ${{ parameters.domain }}
-          frontend: ${{ parameters.frontend }}
-          backend: ${{ parameters.backend }}
-          database: ${{ parameters.database }}
+          stackType: ${{ parameters.stackType }}
+          stackOption: ${{ parameters.stackOption }}
 
   output:
     text:
-      - title: ✅ Project generated successfully
+      - title: ✅ Stack Selection Complete
         content: |
-          You selected:
+          You selected the following configuration:
           - Domain: ${{ parameters.domain }}
-          - Frontend: ${{ parameters.frontend }}
-          - Backend: ${{ parameters.backend }}
-          - Database: ${{ parameters.database }}
+          - Stack Type: ${{ parameters.stackType }}
+          - Selected Option: ${{ parameters.stackOption }}
 
-    # Optional: If you want to keep "Open in VSCode" or Replit
     links:
-      - title: 💻 Open in VSCode (optional example)
+      - title: 💻 Open in VSCode (optional)
         icon: code
         url: https://vscode.dev/
 
-      - title: 🚀 Open in Replit (optional example)
+      - title: 🚀 Open in Replit (optional)
         icon: rocket
         url: https://replit.com/
