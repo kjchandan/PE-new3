@@ -42,7 +42,7 @@ spec:
         stackOption:
           title: Select Stack Option
           type: string
-          # No enum here, must be defined in dependencies for dynamic behavior
+          # No enum here, defined dynamically via dependencies
 
       dependencies:
         domain:
@@ -54,31 +54,29 @@ spec:
                 stackType:
                   const: UI Framework
                 stackOption:
-                  title: UI Framework Options (Banking)
+                  title: UI Framework Options for Banking
                   type: string
                   enum: [Vue.js, Next.js, Typescript]
               required:
                 - stackOption
-
             - properties:
                 domain:
                   const: Banking
                 stackType:
                   const: Backend Platform
                 stackOption:
-                  title: Backend Platform Options (Banking)
+                  title: Backend Platform Options for Banking
                   type: string
                   enum: [Java, Python, Ruby]
               required:
                 - stackOption
-
             - properties:
                 domain:
                   const: Banking
                 stackType:
                   const: Database
                 stackOption:
-                  title: Database Options (Banking)
+                  title: Database Options for Banking
                   type: string
                   enum: [MYSQL, PostgreSQL]
               required:
@@ -91,31 +89,29 @@ spec:
                 stackType:
                   const: UI Framework
                 stackOption:
-                  title: UI Framework Options (Insurance)
+                  title: UI Framework Options for Insurance
                   type: string
                   enum: [React, Angular]
               required:
                 - stackOption
-
             - properties:
                 domain:
                   const: Insurance
                 stackType:
                   const: Backend Platform
                 stackOption:
-                  title: Backend Platform Options (Insurance)
+                  title: Backend Platform Options for Insurance
                   type: string
                   enum: [Scala, Go, Django]
               required:
                 - stackOption
-
             - properties:
                 domain:
                   const: Insurance
                 stackType:
                   const: Database
                 stackOption:
-                  title: Database Options (Insurance)
+                  title: Database Options for Insurance
                   type: string
                   enum: [MYSQL, PostgreSQL]
               required:
@@ -128,31 +124,29 @@ spec:
                 stackType:
                   const: UI Framework
                 stackOption:
-                  title: UI Framework Options (HealthCare)
+                  title: UI Framework Options for HealthCare
                   type: string
                   enum: [Three.js, ReactJs, Angular 2+]
               required:
                 - stackOption
-
             - properties:
                 domain:
                   const: HealthCare
                 stackType:
                   const: Backend Platform
                 stackOption:
-                  title: Backend Platform Options (HealthCare)
+                  title: Backend Platform Options for HealthCare
                   type: string
                   enum: [Springboot, ASP.NET]
               required:
                 - stackOption
-
             - properties:
                 domain:
                   const: HealthCare
                 stackType:
                   const: Database
                 stackOption:
-                  title: Database Options (HealthCare)
+                  title: Database Options for HealthCare
                   type: string
                   enum: [MYSQL, PostgreSQL]
               required:
@@ -165,19 +159,18 @@ spec:
                 stackType:
                   const: UI Framework
                 stackOption:
-                  title: UI Framework Options (Education)
+                  title: UI Framework Options for Education
                   type: string
                   enum: [Vue.js, Next.js, Typescript, Three.js, ReactJs, Angular 2+]
               required:
                 - stackOption
-
             - properties:
                 domain:
                   const: Education
                 stackType:
                   const: Backend Platform
                 stackOption:
-                  title: Backend Platform Options (Education)
+                  title: Backend Platform Options for Education
                   type: string
                   enum:
                     - Java
@@ -193,44 +186,29 @@ spec:
                     - ASP.NET
               required:
                 - stackOption
-
             - properties:
                 domain:
                   const: Education
                 stackType:
                   const: Database
                 stackOption:
-                  title: Database Options (Education)
+                  title: Database Options for Education
                   type: string
                   enum: [MYSQL, PostgreSQL]
               required:
                 - stackOption
 
   steps:
-    - id: fetch
-      name: Fetch Skeleton
-      action: fetch:template
+    - id: review
+      name: Review Selections
+      action: pass
       input:
-        url: ./skeleton
-        values:
-          domain: ${{ parameters.domain }}
-          stackType: ${{ parameters.stackType }}
-          stackOption: ${{ parameters.stackOption }}
+        message: |
+          Domain: ${{ parameters.domain }}
+          Tech Stack Type: ${{ parameters.stackType }}
+          Selected Option: ${{ parameters.stackOption }}
 
   output:
     links:
-      - title: Review Selection
-        url: https://example.com/review?domain=${{ parameters.domain }}&stackType=${{ parameters.stackType }}&stackOption=${{ parameters.stackOption }}
-        icon: visibility
-
-      - title: Open in VSCode
-        icon: code
-        url: https://vscode.dev/?folder=${{ parameters.domain }}-${{ parameters.stackType }}-${{ parameters.stackOption }}
-
-      - title: Open in Replit
-        icon: rocket
-        url: https://replit.com/new/github/${{ parameters.domain }}-${{ parameters.stackType }}-${{ parameters.stackOption }}
-
-      - title: Open in Catalog
-        icon: catalog
-        entityRef: component:default/my-service
+      - title: Review
+        url: '#'
